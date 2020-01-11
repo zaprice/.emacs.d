@@ -25,7 +25,7 @@
    [default default default italic underline success warning error])
  '(package-selected-packages
    (quote
-    (proof-general color-theme-sanityinc-tomorrow sublimity diff-hl dimmer ess markdown-mode smooth-scroll afternoon-theme zenburn-theme blacken elpy flycheck flycheck-mypy exec-path-from-shell)))
+    (multi-term dired-subtree proof-general color-theme-sanityinc-tomorrow sublimity diff-hl dimmer ess markdown-mode smooth-scroll afternoon-theme zenburn-theme blacken elpy flycheck flycheck-mypy exec-path-from-shell)))
  '(pixel-scroll-mode t)
  '(proof-assistants (quote (coq)))
  '(proof-electric-terminator-enable t)
@@ -157,3 +157,19 @@
 
 ;; Automatically run black on buffer save
 (add-hook 'elpy-mode-hook 'blacken-mode)
+
+
+;; Tab into trees in dired
+(require 'dired-subtree)
+(define-key dired-mode-map (kbd "<tab>") 'dired-subtree-insert)
+(define-key dired-mode-map (kbd "S-<tab>") 'dired-subtree-remove)
+
+;; Multiple shell windows
+(require 'multi-term)
+(setq multi-term-program "/bin/zsh")
+(defalias 'term 'multi-term)
+(defalias 'shell 'multi-term)
+(defalias 'unix 'multi-term)
+(setq multi-term-buffer-name "unix")
+
+;; TODO: redefine end-of-buffer as something other than M->
