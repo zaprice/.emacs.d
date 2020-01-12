@@ -153,7 +153,11 @@
 ;; Set up with flycheck
 (when (load "flycheck" t t)
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'flycheck-mode))
+  (add-hook 'elpy-mode-hook 'flycheck-mode)
+  ;; Fix keybinds
+  (define-key elpy-mode-map (kbd "C-c C-p") 'flycheck-previous-error)
+  (define-key elpy-mode-map (kbd "C-c C-n") 'flycheck-next-error)
+  )
 ;; flake8 is set to run after mypy in flycheck by default
 ;; So we switch the first checker to mypy
 (add-hook 'elpy-mode-hook (lambda () (setq flycheck-checker 'python-mypy)))
@@ -174,5 +178,9 @@
 (defalias 'shell 'multi-term)
 (defalias 'unix 'multi-term)
 (setq multi-term-buffer-name "unix")
+;; Fix paste in multi-term
+(add-hook 'term-mode-hook (lambda ()
+                            (define-key term-raw-map (kbd "s-v") 'term-paste)))
 
 ;; TODO: redefine end-of-buffer as something other than M->
+;; TODO: need to be able to select multiple lines and re-indent with tab
