@@ -31,8 +31,8 @@
    [default default default italic underline success warning error])
  '(package-selected-packages
    (quote
-    (multi-term dired-subtree proof-general color-theme-sanityinc-tomorrow sublimity diff-hl dimmer ess markdown-mode smooth-scroll afternoon-theme zenburn-theme blacken elpy flycheck flycheck-mypy exec-path-from-shell)))
- '(pixel-scroll-mode t)
+    (writeroom-mode multi-term dired-subtree proof-general color-theme-sanityinc-tomorrow sublimity diff-hl dimmer ess markdown-mode smooth-scroll afternoon-theme zenburn-theme blacken elpy flycheck flycheck-mypy exec-path-from-shell)))
+;; '(pixel-scroll-mode t)
  '(proof-assistants (quote (coq)))
  '(proof-electric-terminator-enable t)
  '(proof-splash-time 1)
@@ -79,15 +79,16 @@
 ;; Better scrolling at margins
 (setq scroll-conservatively 10000)
 
-;; (require 'smooth-scroll)
-;; (smooth-scroll-mode 1)
-;; (setq smooth-scroll/vscroll-step-size 5)
+(require 'smooth-scroll)
+(smooth-scroll-mode 1)
+(setq smooth-scroll/vscroll-step-size 1)
 
 ;; Dims unselected buffers
 (require 'dimmer)
 (dimmer-mode t)
 
 ;; Windmove, use M-arrow keys to move between buffers
+;; TODO: elpy breaks windmove with M-arrow
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings 'meta))
 
@@ -146,7 +147,7 @@
 (elpy-enable)
 ;; Configure so it knows to use python3
 (setq elpy-rpc-virtualenv-path 'system)
-(setq elpy-rpc-python-command "/usr/local/bin/python3")
+(setq elpy-rpc-python-command "/usr/bin/python3")
 (setq python-shell-interpreter "python3"
       python-shell-interpreter-args "-i")
 
@@ -165,6 +166,8 @@
 ;; Automatically run black on buffer save
 (add-hook 'elpy-mode-hook 'blacken-mode)
 
+;; Configure flake8 to respect Black line length
+(setq-default flycheck-flake8-maximum-line-length 88)
 
 ;; Tab into trees in dired
 (require 'dired-subtree)
@@ -184,3 +187,8 @@
 
 ;; TODO: redefine end-of-buffer as something other than M->
 ;; TODO: need to be able to select multiple lines and re-indent with tab
+
+(cua-mode t)
+(add-hook 'writeroom-mode-enable-hook 'visual-line-mode)
+(add-hook 'writeroom-mode-enable-hook 'flyspell-mode)
+(add-hook 'writeroom-mode-hook 'writeroom-toggle-mode-line)
