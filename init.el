@@ -32,7 +32,6 @@
  '(package-selected-packages
    (quote
     (writeroom-mode multi-term dired-subtree proof-general color-theme-sanityinc-tomorrow sublimity diff-hl dimmer ess markdown-mode smooth-scroll afternoon-theme zenburn-theme blacken elpy flycheck flycheck-mypy exec-path-from-shell)))
-;; '(pixel-scroll-mode t)
  '(proof-assistants (quote (coq)))
  '(proof-electric-terminator-enable t)
  '(proof-splash-time 1)
@@ -76,12 +75,19 @@
 ;; (setq diredp-hide-details-initially-flag nil)
 ;; (setq diredp-hide-details-propagate-flag nil)
 
+;; Scroll config
 ;; Better scrolling at margins
 (setq scroll-conservatively 10000)
-
+;; Scroll smoothly when paging
 (require 'smooth-scroll)
 (smooth-scroll-mode 1)
+;; These do... something
 (setq smooth-scroll/vscroll-step-size 1)
+(setq auto-window-vscroll nil)
+;; Better mouse scroll behavior
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+(setq mouse-wheel-progressive-speed nil)
+
 
 ;; Dims unselected buffers
 (require 'dimmer)
@@ -173,22 +179,22 @@
 (require 'dired-subtree)
 (define-key dired-mode-map (kbd "<tab>") 'dired-subtree-insert)
 (define-key dired-mode-map (kbd "S-<tab>") 'dired-subtree-remove)
+(define-key dired-mode-map (kbd "<backtab>") 'dired-subtree-remove)
 
 ;; Multiple shell windows
-(require 'multi-term)
-(setq multi-term-program "/bin/zsh")
-(defalias 'term 'multi-term)
-(defalias 'shell 'multi-term)
-(defalias 'unix 'multi-term)
-(setq multi-term-buffer-name "unix")
-;; Fix paste in multi-term
-(add-hook 'term-mode-hook (lambda ()
-                            (define-key term-raw-map (kbd "s-v") 'term-paste)))
+;; TODO colors would be nice
+(setq multi-shell-command "/bin/zsh")
+(require 'multi-shell)
+(defalias 'unix 'multi-shell-new)
+(setq multi-shell-buffer-name "unix")
 
 ;; TODO: redefine end-of-buffer as something other than M->
 ;; TODO: need to be able to select multiple lines and re-indent with tab
 
+;; Normal copy/paste/etc.
 (cua-mode t)
+
+;; Writeroom config
 (add-hook 'writeroom-mode-enable-hook 'visual-line-mode)
 (add-hook 'writeroom-mode-enable-hook 'flyspell-mode)
 (add-hook 'writeroom-mode-hook 'writeroom-toggle-mode-line)
