@@ -94,7 +94,6 @@
 (dimmer-mode t)
 
 ;; Windmove, use M-arrow keys to move between buffers
-;; TODO: elpy breaks windmove with M-arrow
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings 'meta))
 
@@ -156,6 +155,9 @@
 (setq elpy-rpc-python-command "/usr/bin/python3")
 (setq python-shell-interpreter "python3"
       python-shell-interpreter-args "-i")
+;; Fix windmove in elpy
+(define-key elpy-mode-map (kbd "M-<right>") 'windmove-right)
+(define-key elpy-mode-map (kbd "M-<left>") 'windmove-left)
 
 ;; Set up with flycheck
 (when (load "flycheck" t t)
