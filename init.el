@@ -31,7 +31,7 @@
    [default default default italic underline success warning error])
  '(package-selected-packages
    (quote
-    (writeroom-mode multi-term dired-subtree proof-general color-theme-sanityinc-tomorrow sublimity diff-hl dimmer ess markdown-mode smooth-scroll afternoon-theme zenburn-theme blacken elpy flycheck flycheck-mypy exec-path-from-shell)))
+    (writeroom-mode dired-subtree proof-general color-theme-sanityinc-tomorrow diff-hl dimmer ess markdown-mode smooth-scroll blacken elpy flycheck flycheck-mypy exec-path-from-shell)))
  '(proof-assistants (quote (coq)))
  '(proof-electric-terminator-enable t)
  '(proof-splash-time 1)
