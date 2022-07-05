@@ -80,7 +80,7 @@
 (setq scroll-conservatively 10000)
 ;; Scroll smoothly when paging
 (require 'smooth-scroll)
-(smooth-scroll-mode 1)
+(smooth-scroll-mode 0)
 ;; These do... something
 (setq smooth-scroll/vscroll-step-size 1)
 (setq auto-window-vscroll nil)
@@ -200,3 +200,9 @@
 (add-hook 'writeroom-mode-enable-hook 'visual-line-mode)
 (add-hook 'writeroom-mode-enable-hook 'flyspell-mode)
 (add-hook 'writeroom-mode-hook 'writeroom-toggle-mode-line)
+;; Fix annoying condition where end-of-line cursor goes to right fringe
+(setq overflow-newline-into-fringe nil)
+
+
+;; Split ediffs vertically
+(setq ediff-split-window-function 'split-window-horizontally)
